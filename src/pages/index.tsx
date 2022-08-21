@@ -33,6 +33,8 @@ const Home: NextPage = () => {
 		postTodo.mutate({
 			text: todoText,
 		});
+
+		setTodoText('');
 	};
 
 	return (
@@ -43,33 +45,58 @@ const Home: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main>
-				<div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full flex-col">
+				<div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full flex-col gap-8">
+					<h1 className="font-bold text-blue-900 text-9xl">
+						LAME ASS TODO LIST
+					</h1>
 					{status === 'authenticated' && (
 						<div>You are signed in as {session.user?.name}</div>
 					)}
 
 					{status === 'authenticated' ? (
-						<button onClick={() => signOut()}>Sign Out</button>
+						<button
+							className="border-4 border-sky-500 px-8 py-2 hover:bg-sky-100"
+							onClick={() => signOut()}
+						>
+							Sign Out
+						</button>
 					) : (
-						<button onClick={() => signIn()}>Sign In</button>
+						<button
+							className="border-4 border-sky-500 px-8 py-2 hover:bg-sky-100"
+							onClick={() => signIn()}
+						>
+							Sign In
+						</button>
 					)}
 
-					<form className="flex gap-8" onSubmit={handleSubmit}>
-						<label>Enter a todo</label>
-						<input
-							className="bg-slate-100 text-slate-900"
-							type="text"
-							value={todoText}
-							onChange={(e) => setTodoText(e.target.value)}
-							maxLength={200}
-						/>
-					</form>
+					{status === 'authenticated' && (
+						<>
+							<form className="flex gap-8" onSubmit={handleSubmit}>
+								<label>Enter a todo</label>
+								<input
+									className="bg-slate-100 text-slate-900"
+									type="text"
+									value={todoText}
+									onChange={(e) => setTodoText(e.target.value)}
+									maxLength={200}
+								/>
+								<button
+									className="border-4 border-sky-500 px-8 py-2 hover:bg-sky-100"
+									type="submit"
+								>
+									Add Todo
+								</button>
+							</form>
 
-					{isLoading && <div>Getting Todos</div>}
+							{isLoading && <div>Getting Todos</div>}
 
-					{todos?.map((todo, i) => {
-						return <Todo todo={todo} key={i} />;
-					})}
+							<div className="flex flex-col gap-2 justify-center items-center">
+								{todos?.map((todo, i) => {
+									return <Todo todo={todo} key={i} />;
+								})}
+							</div>
+						</>
+					)}
 				</div>
 			</main>
 		</>
