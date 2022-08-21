@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 		onMutate: () => {
 			ctx.cancelQuery(['todo.getAll']);
 
-			let optimisticUpdate = ctx.getQueryData(['todo.getAll']);
+			const optimisticUpdate = ctx.getQueryData(['todo.getAll']);
 			if (optimisticUpdate) {
 				ctx.setQueryData(['todo.getAll'], optimisticUpdate);
 			}
@@ -86,7 +86,7 @@ const Todo = ({ todo }: TodoProps) => {
 		onMutate: () => {
 			ctx.cancelQuery(['todo.getAll']);
 
-			let optimisticUpdate = ctx.getQueryData(['todo.getAll']);
+			const optimisticUpdate = ctx.getQueryData(['todo.getAll']);
 			if (optimisticUpdate) {
 				ctx.setQueryData(['todo.getAll'], optimisticUpdate);
 			}
